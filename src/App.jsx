@@ -54,6 +54,22 @@ export default function App() {
     }
   }
 
+  const loadImage = async (url) => {
+    try{
+      const respond = await fetch(url);
+      const results = await respond.json();
+
+      const newImgs = [...imgs, ...results]
+      return newImgs
+    }
+    catch(err){
+      console.log({err});
+    }
+    finally{
+      setIsLoading(false);
+    }
+  }
+
   // use effect de tim anh
   useEffect(() => {
 
@@ -95,6 +111,16 @@ export default function App() {
 
     }
   }, [pageNumber])
+
+
+  useEffect(() => {
+    let params = {client_id: ACESS_KEY, page: 1, per_page: 10};
+    const url = 'https://api.unsplash.com/photos/?'+ new URLSearchParams(params);
+
+    loadImage(url).then(imgs => {
+      setImgs(imgs);
+    });
+  }, [])
 
   // use effect
   useEffect(() => {
