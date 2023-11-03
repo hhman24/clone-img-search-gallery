@@ -15,8 +15,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   // trang thai tim anh
   const [isSearch, setIsSearch] = useState(false);
-  // trang thai moi vao trang
-  const [isStart, setIsStart] = useState(false);
+
   // trang thai neu la phan tu cuoi
   const [lastElement, setLastElement] = useState(null);
   
@@ -43,23 +42,8 @@ export default function App() {
       const respond = await fetch(url);
       const results = await respond.json();
 
-      const newImgs = (pageNumber > 1 && !isSearch) ? ([...imgs, ...results.results]): ([...results.results])
-      return newImgs
-    }
-    catch(err){
-      console.log({err});
-    }
-    finally{
-      setIsLoading(false);
-    }
-  }
-
-  const loadImg = async(url) => {
-    try{
-      const respond = await fetch(url);
-      const results = await respond.json();
-
-      const newImgs = [...imgs, ...results]
+      console.log(results)
+      const newImgs = (pageNumber > 1 && !isSearch) ? ([...imgs, ...results.results]) : ([...results.results])
       return newImgs
     }
     catch(err){
@@ -77,9 +61,10 @@ export default function App() {
       // dat lai page number
       setPageNumber(1);
       
-
       let params = {client_id: ACESS_KEY, query: searchInfo, page: pageNumber, per_page: 10};
       const url = 'https://api.unsplash.com/search/photos/?'+ new URLSearchParams(params);
+
+      setIsLoading(true);
 
       // lay du lieu neu thanh cong
       searchImage(url).then(imgs => {
@@ -87,7 +72,6 @@ export default function App() {
         setIsLoading(false);
       });
 
-      setIsStart(true);
       setIsSearch(false);
     }
   }, [isSearch])
@@ -95,21 +79,6 @@ export default function App() {
 
   // use effect de load them anh
   useEffect(() => {
-
-    if(!isStart){
-      let params = {client_id: ACESS_KEY, page: pageNumber, per_page: 10};
-      let url = 'https://api.unsplash.com/photos/?'+ new URLSearchParams(params);
-  
-      setIsLoading(true);
-
-      setTimeout(() => {
-        loadImg(url).then(imgs => {
-          setImgs(imgs);
-          setIsLoading(false);
-        });
-      }, 1000)
-    }
-
     if(pageNumber > 1){
       
       let params = {client_id: ACESS_KEY, query: searchInfo, page: pageNumber, per_page: 10};
@@ -126,16 +95,6 @@ export default function App() {
 
     }
   }, [pageNumber])
-
-  useEffect(() =>{
-    let params = {client_id: ACESS_KEY, page: 1, per_page: 10};
-    let url = 'https://api.unsplash.com/photos/?'+ new URLSearchParams(params);
-
-    loadImg(url).then(imgs => {
-      setImgs(imgs);
-    });
-
-  }, [])
 
   // use effect
   useEffect(() => {
@@ -159,7 +118,7 @@ export default function App() {
         className="app-background"
       >
         <div className="app-background-image" style={{
-          backgroundImage: `url(/src/assets/bg4.png)`}}/>
+          backgroundImage: `url(src/assets/bg4.png)`}}/>
         <div className="app-background-image-filter"/>
       </div>
 
