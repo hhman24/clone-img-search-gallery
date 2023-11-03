@@ -118,7 +118,7 @@ export default function App() {
         className="app-background"
       >
         <div className="app-background-image" style={{
-          backgroundImage: `url(src/assets/bg4.png)`}}/>
+          backgroundImage: `url(https://th.bing.com/th/id/R.e3ebb7715cee7a0b66c355dd09c10828?rik=2FwnCB0gzLPKCw&riu=http%3a%2f%2fkarenhutton.com%2fwp-content%2fuploads%2f2013%2f02%2fEntryToTheMountains.jpg&ehk=KDBQX2HV5psrQNrYkEzEYqo%2bFHVlUKeP4GkJCc4D%2fK8%3d&risl=&pid=ImgRaw&r=0)`}}/>
         <div className="app-background-image-filter"/>
       </div>
 
