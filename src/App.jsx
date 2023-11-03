@@ -16,6 +16,8 @@ export default function App() {
   // trang thai tim anh
   const [isSearch, setIsSearch] = useState(false);
 
+  const [isStart, setIsStart] = useState(false);
+
   // trang thai neu la phan tu cuoi
   const [lastElement, setLastElement] = useState(null);
   
@@ -89,6 +91,7 @@ export default function App() {
       });
 
       setIsSearch(false);
+      setIsStart(true);
     }
   }, [isSearch])
 
@@ -97,18 +100,32 @@ export default function App() {
   useEffect(() => {
     if(pageNumber > 1){
       
-      let params = {client_id: ACESS_KEY, query: searchInfo, page: pageNumber, per_page: 10};
-      let url = 'https://api.unsplash.com/search/photos/?'+ new URLSearchParams(params);
+      if(!isStart){
+        let params = {client_id: ACESS_KEY, page: pageNumber, per_page: 10};
+        let url = 'https://api.unsplash.com/photos/?'+ new URLSearchParams(params);
+    
+        setIsLoading(true);
   
-      setIsLoading(true);
-
-      setTimeout(() => {
-        searchImage(url).then(imgs => {
-          setImgs(imgs);
-          setIsLoading(false);
-        });
-      }, 1000)
-
+        setTimeout(() => {
+          loadImage(url).then(imgs => {
+            setImgs(imgs);
+            setIsLoading(false);
+          });
+        }, 1000)
+      }
+      else {
+        let params = {client_id: ACESS_KEY, query: searchInfo, page: pageNumber, per_page: 10};
+        let url = 'https://api.unsplash.com/search/photos/?'+ new URLSearchParams(params);
+    
+        setIsLoading(true);
+  
+        setTimeout(() => {
+          searchImage(url).then(imgs => {
+            setImgs(imgs);
+            setIsLoading(false);
+          });
+        }, 1000)
+      }
     }
   }, [pageNumber])
 

@@ -13,7 +13,7 @@ Currently, two official plugins are available:
 
 ## 🌎 Demo deloy host public
 
-<https://hhman-tic-tac-toe-game.netlify.app>
+<https://hhman-search-img.netlify.app/>
 
 # 🛠️ Requirements
 - ✅ Implement the ability to search for photos and display images that match the search text. (3 points)
