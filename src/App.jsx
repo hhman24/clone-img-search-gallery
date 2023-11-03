@@ -159,7 +159,7 @@ export default function App() {
         className="app-background"
       >
         <div className="app-background-image" style={{
-          backgroundImage: `url(src/assets/bg4.png)`}}/>
+          backgroundImage: `url(/src/assets/bg4.png)`}}/>
         <div className="app-background-image-filter"/>
       </div>
 
